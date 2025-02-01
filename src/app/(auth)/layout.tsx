@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import "./styles.css";
 
 const navLinks = [
@@ -11,11 +12,20 @@ const navLinks = [
 ];
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  const [input, setInput] = useState("");
   const pathname = usePathname();
 
   return (
     <>
       <nav>
+        <div>
+          <input 
+            type="text" 
+            value={input} 
+            onChange={(e) => setInput(e.target.value)} 
+            placeholder="Search..."
+          />
+        </div>
         <ul>
           {navLinks.map((link) => {
             const isActive =
@@ -23,9 +33,9 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
             return (
               <li key={link.name}>
-                <Link
+                <Link 
+                  href={link.href} 
                   className={isActive ? "font-bold mr-4" : "text-blue-500 mr-4"}
-                  href={link.href}
                 >
                   {link.name}
                 </Link>
